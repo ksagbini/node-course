@@ -1,12 +1,16 @@
-const fs = require('fs');
+const yargs = require('yargs')
+    .command('listar')
+    .argv;
 
-let base  = 2;
+// const multiplicar = require('./multiplicar/multiplicar');
+const {crearArchivo} = require('./multiplicar/multiplicar');
 
-for( let i = 1;i <= 10; i++){
-    console.log(`${base} x ${i} = ${base*i}`);
-}
 
-fs.writeFile('tabla-2.txt', 'Hello Node.js', (err) => {
-    if (err) throw err;
-    console.log('The file has been saved!');
-  });
+
+let argv = process.argv;
+let parametro = argv[2];
+let base = parametro.split('=')[1];
+
+// crearArchivo(base)
+//     .then((archivo) => console.log(`Archivo creado --> ${archivo}`))
+//     .catch((err) => console.log(`Error al crear el archivo`, err));
