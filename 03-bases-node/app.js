@@ -13,7 +13,7 @@ const { crearArchivo, listarTabla, leerTabla } = require('./multiplicar/multipli
 
 let comando = yargs._[0];
 switch (comando) {
-
+ 
     case 'listar':
         listarTabla(yargs.base, yargs.limite);
         break;
