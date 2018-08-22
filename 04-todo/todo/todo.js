@@ -13,6 +13,32 @@ let crear = (descripcion) => {
     return porHacer;
 };
 
+let actualizar = (descripcion, completado = true) => {
+    cargarDb();
+    let index = listadoPorHacer.findIndex( tarea => tarea.descripcion === descripcion);
+    if(index >= 0){
+        listadoPorHacer[index].completado = completado;
+        guardarDb();
+        return true;
+    }
+    else{
+        return false;
+    }
+};
+
+let eliminar = (descripcion) => {
+    cargarDb();
+    let nuevo = listadoPorHacer.filter(tarea => tarea.descripcion !== descripcion);
+    if(nuevo.length === listadoPorHacer.length){
+        return false;
+    }
+    else{
+        listadoPorHacer = nuevo;
+        guardarDb();
+        return true;
+    }
+};
+
 let guardarDb = () => {
     let data = JSON.stringify(listadoPorHacer);
     fs.writeFile('./db/data.json',data, (err) => {
@@ -36,5 +62,7 @@ let getListado = () => {
 
 module.exports = {
     crear,
-    getListado
+    getListado,
+    actualizar,
+    eliminar
 };
