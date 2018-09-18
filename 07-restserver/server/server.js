@@ -1,5 +1,7 @@
 require('./config/config');
 const express = require('express');
+const mongoose = require('mongoose');
+
 const app = express();
 
 
@@ -15,40 +17,23 @@ app.use(bodyParser.json())
  * REST Services
  */
 
-
 app.get('/', (req, res) => {
   res.json({text:'Home'});
 });
 
+app.use(require('./routes/user'));
+
 /**
- * USER SERVICES --------------------
+ * DATABASE CONNECTION
  */
-app.get('/user', (req, res) => {
-  res.json({text:'Get users'});
-});
-
-app.post('/user', (req, res) => {
-  let body = req.body;
-
-  if(!body.name){
-    res.status(400).json({status: false, msg: 'Name required'});
-  } else{
-    res.json({text:'Create users', body});
+mongoose.connect('mongodb://coffe_user:rQ4GcYnSxXmmFkv@ds261072.mlab.com:61072/coffe_db',
+  { useCreateIndex: true, useNewUrlParser: true },
+  (err, res) => {
+    if (err) throw err;
+    console.log('Database connected');
   }
-  
-});
+);
 
-app.put('/user/:id', (req, res) => {
-  let id = req.params.id;
-  res.json({text:`Update users ${id}`, body: req.body});
-});
-
-app.delete('/user', (req, res) => {
-  res.json({text:'Delete users'});
-});
-/**
- * -----------------------------------
- */
 
 //Run server
 app.listen(process.env.PORT, () => {
