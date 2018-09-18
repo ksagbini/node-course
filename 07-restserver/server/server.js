@@ -1,5 +1,7 @@
+require('./config/config');
 const express = require('express');
 const app = express();
+
 
 //Librery to get data from post request
 const bodyParser = require('body-parser');
@@ -49,6 +51,6 @@ app.delete('/user', (req, res) => {
  */
 
 //Run server
-app.listen(3000, () => {
-  console.log('Running server, port 3000');
+app.listen(process.env.PORT, () => {
+  console.log(`Running server, port ${process.env.PORT}`);
 });
