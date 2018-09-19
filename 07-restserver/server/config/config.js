@@ -20,8 +20,5 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'dev';
 /**
  * Database config values
  */
-let dbUser = 'coffe_user';
-let dbPass = 'rQ4GcYnSxXmmFkv';
-let dbName = 'coffe_db'; 
-let urlDB = `mongodb://${dbUser}:${dbPass}@ds261072.mlab.com:61072/${dbName}`;
+let urlDB = `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@ds261072.mlab.com:61072/${process.env.DB_NAME}`;
 process.env.URL_DB = urlDB;
