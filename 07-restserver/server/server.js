@@ -26,7 +26,7 @@ app.use(require('./routes/user'));
 /**
  * DATABASE CONNECTION
  */
-mongoose.connect('mongodb://coffe_user:rQ4GcYnSxXmmFkv@ds261072.mlab.com:61072/coffe_db',
+mongoose.connect(process.env.URL_DB,
   { useCreateIndex: true, useNewUrlParser: true },
   (err, res) => {
     if (err) throw err;

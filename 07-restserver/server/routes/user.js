@@ -49,20 +49,20 @@ app.put('/user/:id', (req, res) => {
 
 app.delete('/user/:id', (req, res) => {
 
-
     let id = req.params.id;
 
-    User.findByIdAndDelete(id, (err, usr) => {
+    // User.findByIdAndDelete(id, (err, usr) => {
+    //     console.log(usr);
+    //     if (err) return res.status(400).json(err);
+    //     if(!usr) return res.status(404).json(`User ${id} not found`);
+    //     res.json(`User ${usr.name} ${usr.lastname} removed`);
+    // });
 
-        console.log(usr);
-
-
+    User.findByIdAndUpdate(id, {status: false}, {new: true},(err, usr) => {
         if (err) return res.status(400).json(err);
         if(!usr) return res.status(404).json(`User ${id} not found`);
-        res.json(`User ${usr.name} ${usr.lastname} removed`);
+        res.json(`User ${id} removed`);
     });
-
-
 
 });
 
