@@ -7,9 +7,8 @@ const app = express();
 
 //Librery to get data from post request
 const bodyParser = require('body-parser');
-
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false })) 
+app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
@@ -18,10 +17,10 @@ app.use(bodyParser.json())
  */
 
 app.get('/', (req, res) => {
-  res.json({text:'Home'});
+  res.json({ text: 'Home' });
 });
 
-app.use(require('./routes/user'));
+app.use(require('./routes/index'));
 
 /**
  * DATABASE CONNECTION
