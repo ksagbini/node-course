@@ -29,3 +29,9 @@ process.env.URL_DB = urlDB;
  */
 process.env.EXPIRES_TOKEN = 60 * 60 * 24 * 30;
 process.env.SEED_TOKEN = process.env.SEED_TOKEN || 'SEED_DEV';
+
+
+/**
+ * GOOGLE CLIENT ID
+ */
+process.env.CLIENT_ID = process.env.CLIENT_ID  || '728040508595-sqb84j2at7o193rag4con01156t5rels.apps.googleusercontent.com'
