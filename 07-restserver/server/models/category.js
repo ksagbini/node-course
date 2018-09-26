@@ -11,6 +11,11 @@ let category = new Schema({
         type: String,
         default: ''
     },
+    user: {
+        type: Schema.Types.ObjectId, 
+        ref: 'user',
+        required: [true, 'User id is required']
+    },
     status: {
         type: Boolean,
         default: true
