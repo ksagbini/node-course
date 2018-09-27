@@ -1,5 +1,8 @@
-const mongoose = require('mongoose');
+/**
+ * Categories database model
+ */
 
+const mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 
 let category = new Schema({

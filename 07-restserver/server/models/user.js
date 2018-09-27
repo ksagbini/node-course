@@ -1,3 +1,7 @@
+/**
+ * User database model
+ */
+
 const mongoose = require('mongoose');
 const uniqueVal = require('mongoose-unique-validator')
 let Schema = mongoose.Schema;
