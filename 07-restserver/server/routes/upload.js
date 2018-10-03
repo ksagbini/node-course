@@ -6,6 +6,7 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const fileUpload = require('express-fileupload');
+const { authToken, authTokenByUrl } = require('../middlewares/auth');
 const User = require('../models/user');
 const Product = require('../models/product');
 const app = express();
@@ -14,26 +15,40 @@ const app = express();
 // default options
 app.use(fileUpload());
 
-app.put('/upload/:type/:id', function (req, res) {
+app.get('/image/:type/:img', authTokenByUrl, (req, res) => {
+
+  let type = req.params.type;
+  let img = req.params.img;
+
+  if (!fn.validType(type)) return res.status(400).json(`Invalid type ${type}`);
+
+  let imagePath = path.resolve(__dirname, `../../uploads/${type}/${img}`)
+
+  if (fs.existsSync(imagePath)) {
+    res.sendFile(imagePath);
+  }
+  else {
+    let noImgPath = path.resolve(__dirname, `../assets/no-image.jpg`);
+    res.sendFile(noImgPath);
+  }
+
+});
+
+
+app.put('/upload/:type/:id', (req, res) => {
 
   let type = req.params.type.toLowerCase();
   let id = req.params.id;
 
-  let validType = ['user', 'product'];
-  if (validType.indexOf(type) < 0) return res.status(400).json(`Type ${type} not valid. Valid types: ${validType.join(', ')}`);
-
+  if (!fn.validType(type)) return res.status(400).json(`Type ${type} not valid. Valid types: ${validType.join(', ')}`);
 
   if (!req.files) return res.status(400).json('No files were uploaded.');
   let upload_file = req.files.upload_file;
 
-
-  let extentions = ['png', 'jpg', 'gif', 'jpeg'];
   let fileName = upload_file.name.split('.');
   let ext = fileName[fileName.length - 1].toLowerCase();
-
-  if (extentions.indexOf(ext) < 0) {
-    return res.status(400).json(`File extention '${ext}' invalid. Extention valid: ${extentions.join(', ')}.`);
-  }
+  console.log('EXT ' + ext, fn.validExtention(ext))
+  if (!fn.validExtention(ext)) return res.status(400).json(`File extention '${ext}' invalid.`);
 
   let newFileName = `${id}_${new Date().getMilliseconds()}.${ext}`;
   let filePath = `uploads/${type}/${newFileName}`;
@@ -90,9 +105,11 @@ let fn = {
   removeFile: (type, fileName) => {
     //Remove the previews user image
     let pathUrl = path.resolve(__dirname, `../../uploads/${type}/${fileName}`);
-    if(!fileName || fileName =='' || fileName == null) return;
+    if (!fileName || fileName == '' || fileName == null) return;
     if (fs.existsSync(pathUrl)) fs.unlinkSync(pathUrl);
-  }
+  },
+  validType: (type) => ['user', 'product'].indexOf(type.toLowerCase()) > -1,
+  validExtention: (ext) => ['png', 'jpg', 'gif', 'jpeg'].indexOf(ext.toLowerCase()) > -1
 
 };
 
