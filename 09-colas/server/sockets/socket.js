@@ -26,4 +26,6 @@ io.on('connection', (client) => {
 
     });
 
+    client.emit('currentTicket', {ticket: tck.getLastTicket()});
+
 });

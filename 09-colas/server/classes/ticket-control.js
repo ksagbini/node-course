@@ -30,6 +30,10 @@ class TicketControl {
         this.saveFile(jsonData);
     }
 
+    getLastTicket() {
+        return `Ticket #${this.last}`;
+    }
+
     saveFile(data){
         fs.writeFileSync('./server/data/data.json', JSON.stringify(data));
     }
