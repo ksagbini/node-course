@@ -26,6 +26,19 @@ io.on('connection', (client) => {
 
     });
 
+    client.on('onTicket', (data, callback) => {
+
+
+        if(!data.desk){
+            return callback(false);
+        }
+
+        let ticket = tck.takeTicket(data.desk);
+        callback(ticket);
+
+
+    });
+
     client.emit('currentTicket', {ticket: tck.getLastTicket()});
 
 });
