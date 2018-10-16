@@ -54,6 +54,10 @@ class TicketControl {
 
     }
 
+    getLastFour(){
+        return this.lastFour;
+    }
+
     reset() {
         let jsonData = {
             last: this.last,

@@ -23,22 +23,25 @@ io.on('connection', (client) => {
     client.on('nextTicket', ( callback) => {
         let next = tck.next();
         console.log(next);
+        callback(next);
 
     });
 
     client.on('onTicket', (data, callback) => {
-
-
         if(!data.desk){
             return callback(false);
         }
 
         let ticket = tck.takeTicket(data.desk);
         callback(ticket);
-
-
+        client.broadcast.emit('lastFourData', {lastFour: tck.getLastFour()});
     });
 
-    client.emit('currentTicket', {ticket: tck.getLastTicket()});
+    client.on('lastFour', (data, callback) => {
+        console.log(tck.getLastFour())
+        callback(tck.getLastFour());
+    });
+
+    client.emit('currentTicket', {ticket: tck.getLastTicket(), lastFour: tck.getLastFour()});
 
 });

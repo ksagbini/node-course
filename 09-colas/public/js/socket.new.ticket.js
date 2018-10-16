@@ -16,7 +16,10 @@ socket.on('currentTicket', function(resp) {
 
 
 $('button').on('click', function(){
-    socket.emit('nextTicket');
+    socket.emit('nextTicket', function(resp) {
+        console.log(resp);
+        label.text(resp);
+    });
 });
 
 

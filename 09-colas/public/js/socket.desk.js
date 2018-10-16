@@ -8,4 +8,17 @@ if(!params.has('escritorio')){
 }
 
 var desk = params.get('escritorio');
+var smallLabel = $('small');
+$('h1').text('Escritorio ' + desk);
 console.log(desk);
+
+$('button').on('click', function(){
+    socket.emit('onTicket', {desk: desk}, function(resp){
+        if(resp == 'No pending tickets'){
+            alert(resp);
+            return false;
+        }
+        console.log(resp);
+        smallLabel.text(resp.number);
+    });
+});
